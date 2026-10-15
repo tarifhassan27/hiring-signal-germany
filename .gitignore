@@ -1,0 +1,14 @@
+# Raw job feed snapshots — company names not published
+02_data/raw/
+02_data/company_list.csv
+02_data/data_check.csv
+02_data/data_check.md
+02_data/roles_*.csv
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Power BI
+*.pbix
