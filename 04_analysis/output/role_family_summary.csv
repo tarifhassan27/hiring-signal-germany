@@ -1,0 +1,5 @@
+role_family,total_roles,hard_to_fill_count,avg_days_open,hard_to_fill_pct,avg_days_until_90_active
+Data,11,1,51.2,9.1,66.5
+Product,13,1,29.5,7.7,71.6
+GTM,78,2,27.3,2.6,67.3
+Engineering,155,3,23.9,1.9,67.8
