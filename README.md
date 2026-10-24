@@ -96,27 +96,46 @@ Company names appear on the charts as they do on public career pages — this da
 
 ```bash
 pip install -r requirements.txt
+playwright install chromium
 ```
 
-**Ingest one snapshot:**
+Set DB credentials as environment variables before running:
 
 ```bash
-python 03_pipeline/feed_ingest.py
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=hiring_signal
+export DB_USER=postgres
+export DB_PASSWORD=your_password
 ```
 
-**Run analysis:**
+**Check ATS feeds and collect a snapshot:**
 
 ```bash
-python 04_analysis/hiring_signal_analysis.py
+python 02_data/feed_check.py
 ```
 
-**Re-render charts:**
-
-Open `05_outputs/charts.html` in a browser, or run:
+**Load snapshot into Postgres:**
 
 ```bash
-python 05_outputs/render_charts.py
+python 02_data/load_raw.py
 ```
+
+**Apply cleaning rules and classify roles (run in DBeaver or psql):**
+
+```sql
+\i 03_sql/clean_load.sql
+```
+
+**Run analysis and export CSVs:**
+
+```bash
+python 04_analysis/analyse.py
+```
+
+**View charts:**
+
+Open `05_outputs/charts.html` in any browser.
 
 ---
 

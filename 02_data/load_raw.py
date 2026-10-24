@@ -5,17 +5,18 @@ Run from the project root: python 02_data/load_raw.py
 """
 
 import json
+import os
 import psycopg2
 from pathlib import Path
 from datetime import date
 
 # --- CONFIG ---
 DB = {
-    "host":     "localhost",
-    "port":     5432,
-    "dbname":   "hiring_signal",
-    "user":     "postgres",
-    "password": "bdpower2026",
+    "host":     os.environ.get("DB_HOST",     "localhost"),
+    "port":     int(os.environ.get("DB_PORT", "5432")),
+    "dbname":   os.environ.get("DB_NAME",     "hiring_signal"),
+    "user":     os.environ.get("DB_USER",     "postgres"),
+    "password": os.environ.get("DB_PASSWORD", ""),
 }
 
 RAW_DIR = Path(__file__).parent / "raw"

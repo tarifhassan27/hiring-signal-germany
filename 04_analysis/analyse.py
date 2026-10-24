@@ -5,17 +5,18 @@ role-family-level summaries, saves two CSVs to 04_analysis/output/.
 Run from the project root: python 04_analysis/analyse.py
 """
 
+import os
 import pandas as pd
 from pathlib import Path
 from sqlalchemy import create_engine
 
 # --- CONFIG ---
 DB = {
-    "host":     "localhost",
-    "port":     5432,
-    "dbname":   "hiring_signal",
-    "user":     "postgres",
-    "password": "bdpower2026",
+    "host":     os.environ.get("DB_HOST",     "localhost"),
+    "port":     int(os.environ.get("DB_PORT", "5432")),
+    "dbname":   os.environ.get("DB_NAME",     "hiring_signal"),
+    "user":     os.environ.get("DB_USER",     "postgres"),
+    "password": os.environ.get("DB_PASSWORD", ""),
 }
 
 OUT_DIR = Path(__file__).parent / "output"
