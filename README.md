@@ -1,1 +1,136 @@
-# hiring-signal-germany
+# Hiring Signal · Germany
+
+**Which engineering, product, data and GTM roles in German tech are approaching the 90-day hard-to-fill threshold — and how much runway is left before they cross it?**
+
+A data analysis of live job postings across 20 German tech scale-ups. Built from public ATS feeds. Single snapshot: 2026-10-15.
+
+---
+
+## The Problem
+
+The national average for a closed vacancy in Germany is **168 days** (Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt, Dec 2024, p. 14). Most teams don't track role age at all. By the time a role feels hard to fill, it's already past the threshold. The signal came weeks earlier.
+
+![Slide 1 — Cover](05_outputs/deck/slide_01.png)
+
+---
+
+## Why It Matters
+
+A role that ages past 90 days doesn't just stay open — it creates downstream pressure. Candidates disengage. JD rewrites begin. Hiring managers lose confidence. Agencies get called at 150+ days at a premium, after the signal was already there.
+
+![Slide 2 — The Problem](05_outputs/deck/slide_02.png)
+
+---
+
+## Methodology
+
+Pulled directly from public ATS job feeds (Greenhouse, Ashby, Lever) — no scraping, no manual data entry. Every role classified by family using keyword matching on job title. Every posting dated, capped at 365 days to exclude stale outliers.
+
+**Pipeline:**
+
+```
+Public ATS feeds (JSON)
+  → raw.job_postings        597 rows
+  → clean.job_postings      495 classified rows · days_open · days_until_90 · role_family
+  → 90-day threshold flag   status = hard_to_fill when days_open ≥ 90
+  → Company + family summaries
+```
+
+![Slide 3 — Methodology](05_outputs/deck/slide_03.png)
+
+---
+
+## Company Benchmark
+
+Average days open per company, classified roles only. 14 of 20 companies had classifiable postings on this snapshot. Three companies have at least one role past the 90-day threshold.
+
+![Slide 4 — Company Benchmark](05_outputs/deck/slide_04.png)
+
+---
+
+## Role Family Signal
+
+Which role families are closest to the hard-to-fill line? Data and Product show the highest hard-to-fill rates (9.1% and 7.7%). All four families have active roles averaging 66–72 days until the 90-day threshold.
+
+![Slide 5 — Role Family Signal](05_outputs/deck/slide_05.png)
+
+---
+
+## Limitations
+
+This is a single-snapshot analysis. The core findings hold, but there are edges worth stating:
+
+- **Platform sample bias** — Sample leans towards companies on US-hosted ATS platforms. Personio and Greenhouse EU feeds block automated access.
+- **Days open ≠ time-to-fill** — A role may have a strong internal pipeline while appearing open externally.
+- **One snapshot can't show closure** — Roles filled and reposted look like new openings. Weekly tracking will resolve this over 4–6 snapshots.
+
+![Slide 6 — Limitations](05_outputs/deck/slide_06.png)
+
+---
+
+## About
+
+Built by Tarif Hassan — people analytics professional, reinventing HR with AI & Analytics.
+
+Not selling anything. Open to a 20-minute conversation if this data is useful to your team.
+
+![Slide 7 — About](05_outputs/deck/slide_07.png)
+
+---
+
+## Deck
+
+Full presentation: [`05_outputs/deck/hiring_signal_germany.pdf`](05_outputs/deck/hiring_signal_germany.pdf)
+
+---
+
+## Data Note
+
+Company names appear on the charts as they do on public career pages — this data is already public. Raw ATS feed snapshots and the company list are not committed to this repository.
+
+---
+
+## How to Run
+
+**Requirements:** Python 3.10+, PostgreSQL
+
+```bash
+pip install -r requirements.txt
+```
+
+**Ingest one snapshot:**
+
+```bash
+python 03_pipeline/feed_ingest.py
+```
+
+**Run analysis:**
+
+```bash
+python 04_analysis/hiring_signal_analysis.py
+```
+
+**Re-render charts:**
+
+Open `05_outputs/charts.html` in a browser, or run:
+
+```bash
+python 05_outputs/render_charts.py
+```
+
+---
+
+## Stack
+
+| Layer | Tool |
+|---|---|
+| ATS feeds | Greenhouse API · Ashby API · Lever API |
+| Storage | PostgreSQL (`raw` + `clean` schemas) |
+| Pipeline | Python · SQLAlchemy |
+| Analysis | Python · pandas |
+| Charts | HTML · JavaScript (inline) · Playwright (PNG render) |
+| Benchmark | Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt, Dez 2024 |
+
+---
+
+*Snapshot date: 2026-10-15 · n = 495 classified roles · 20 companies tracked*
