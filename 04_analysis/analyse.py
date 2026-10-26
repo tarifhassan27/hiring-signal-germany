@@ -41,9 +41,11 @@ print(f"Loaded {len(df)} rows from clean.job_postings")
 
 # Keep only classified roles for summary tables
 classified = df[df["role_family"].notna()].copy()
-print(f"Classified roles: {len(classified)}")
+print(f"In-scope roles (Eng/Product/Data/GTM): {len(classified)}")
 
 # --- COMPANY SUMMARY ---
+MIN_ROLES = 5  # minimum in-scope roles to appear in company-level results
+
 company = (
     classified
     .groupby("company")
@@ -58,11 +60,30 @@ company["hard_to_fill_pct"] = (
     company["hard_to_fill_count"] / company["total_roles"] * 100
 ).round(1)
 company["avg_days_open"] = company["avg_days_open"].round(1)
+
+# Enforce minimum role threshold before any output
+company = company[company["total_roles"] >= MIN_ROLES].copy()
+assert company["total_roles"].min() >= MIN_ROLES, "A company with fewer than 5 roles slipped through"
+
 company = company.sort_values("hard_to_fill_pct", ascending=False)
 
-company_path = OUT_DIR / "company_summary.csv"
-company.to_csv(company_path, index=False)
-print(f"\nCompany summary ({len(company)} companies) -> {company_path}")
+print(f"Companies shown (>= {MIN_ROLES} in-scope roles): {len(company)} | Roles shown: {company['total_roles'].sum()}")
+
+# Public CSV: anonymised (Company A, B, C ...) — safe to commit
+company_public = company.copy().reset_index(drop=True)
+company_public.insert(0, "company_label", [f"Company {chr(65 + i)}" for i in range(len(company_public))])
+company_public_path = OUT_DIR / "company_summary_public.csv"
+company_public.drop(columns=["company"]).to_csv(company_public_path, index=False)
+print(f"Public company summary (anonymised) -> {company_public_path}")
+
+# Private CSV: named — gitignored, never committed
+private_dir = Path(__file__).parent.parent / "private"
+private_dir.mkdir(exist_ok=True)
+company_private_path = private_dir / "company_summary_named.csv"
+company.to_csv(company_private_path, index=False)
+print(f"Private company summary (named)     -> {company_private_path}")
+
+print("\n--- Company results (named, private) ---")
 print(company.to_string(index=False))
 
 # --- ROLE FAMILY SUMMARY ---
@@ -99,13 +120,12 @@ family.to_csv(family_path, index=False)
 print(f"\nRole family summary -> {family_path}")
 print(family.to_string(index=False))
 
-# --- BENCHMARK CALLOUT ---
-BENCHMARK_DAYS = 168
-print(f"\n--- Benchmark: {BENCHMARK_DAYS} days (Bundesagentur fur Arbeit, Dec 2024) ---")
+# Note on hard-to-fill counts: use raw counts (not percentages) for families
+# with fewer than 5 hard-to-fill roles in the numerator — flag those here.
+print("\n--- Hard-to-fill count check (use counts, not %, if < 5) ---")
 for _, row in family.iterrows():
-    diff = row["avg_days_open"] - BENCHMARK_DAYS
-    direction = "above" if diff > 0 else "below"
-    print(f"  {row['role_family']:12s}: avg {row['avg_days_open']} days "
-          f"({abs(diff):.1f} days {direction} benchmark)")
+    flag = " ← use count, not %" if row["hard_to_fill_count"] < 5 else ""
+    print(f"  {row['role_family']:12s}: {int(row['hard_to_fill_count'])} of {int(row['total_roles'])} "
+          f"({row['hard_to_fill_pct']}%){flag}")
 
 print("\nDone.")

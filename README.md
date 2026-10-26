@@ -2,13 +2,15 @@
 
 **Which engineering, product, data and GTM roles in German tech are approaching the 90-day hard-to-fill threshold — and how much runway is left before they cross it?**
 
-A data analysis of live job postings across 20 German tech scale-ups. Built from public ATS feeds. Single snapshot: 2026-10-15.
+A data analysis of live job postings across 19 German tech scale-ups. Built from public ATS feeds. Single snapshot: 2026-10-15.
 
 ---
 
 ## The Problem
 
-The national average for a closed vacancy in Germany is **168 days** (Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt, Dec 2024, p. 14). Most teams don't track role age at all. By the time a role feels hard to fill, it's already past the threshold. The signal came weeks earlier.
+Most hiring teams don't track role age. By the time a role feels hard to fill, it's already past the threshold. The signal came weeks earlier.
+
+The 90-day threshold is calibrated against this cohort: the p90 posting age across all 252 in-scope roles is 51 days. A role at 90 days is already past the 90th percentile of the distribution — a meaningful outlier, not an arbitrary cutoff.
 
 ![Slide 1 — Cover](05_outputs/deck/slide_01.png)
 
@@ -31,7 +33,9 @@ Pulled directly from public ATS job feeds (Greenhouse, Ashby, Lever) — no scra
 ```
 Public ATS feeds (JSON)
   → raw.job_postings        597 rows
-  → clean.job_postings      495 classified rows · days_open · days_until_90 · role_family
+  → clean.job_postings      495 rows within 365-day cap · days_open · days_until_90 · role_family
+  → In-scope roles          257 classified (non-NULL role_family) across 14 companies
+  → n≥5 filter              252 roles across 12 companies (min. 5 in-scope roles per company)
   → 90-day threshold flag   status = hard_to_fill when days_open ≥ 90
   → Company + family summaries
 ```
@@ -42,7 +46,9 @@ Public ATS feeds (JSON)
 
 ## Company Benchmark
 
-Average days open per company, classified roles only. 14 of 20 companies had classifiable postings on this snapshot. Three companies have at least one role past the 90-day threshold.
+Average days open per company, in-scope roles only (n≥5 per company). 12 of 19 companies met the minimum threshold for inclusion. Two companies have at least one role past the 90-day mark.
+
+The chart uses anonymised labels (Company A–L) to keep the public output clean. A private version with named companies is not committed to this repository.
 
 ![Slide 4 — Company Benchmark](05_outputs/deck/slide_04.png)
 
@@ -50,7 +56,9 @@ Average days open per company, classified roles only. 14 of 20 companies had cla
 
 ## Role Family Signal
 
-Which role families are closest to the hard-to-fill line? Data and Product show the highest hard-to-fill rates (9.1% and 7.7%). All four families have active roles averaging 66–72 days until the 90-day threshold.
+Which role families are closest to the hard-to-fill line? Data and GTM show the highest hard-to-fill rates. All four families have active roles averaging within striking distance of the 90-day threshold.
+
+Note: the company benchmark (n=252) and role-family view (n=257) differ slightly — the family view includes all 14 companies with in-scope roles, while the company benchmark applies the n≥5 filter, dropping two companies. Both counts are intentional and correct for their respective views.
 
 ![Slide 5 — Role Family Signal](05_outputs/deck/slide_05.png)
 
@@ -63,6 +71,7 @@ This is a single-snapshot analysis. The core findings hold, but there are edges 
 - **Platform sample bias** — Sample leans towards companies on US-hosted ATS platforms. Personio and Greenhouse EU feeds block automated access.
 - **Days open ≠ time-to-fill** — A role may have a strong internal pipeline while appearing open externally.
 - **One snapshot can't show closure** — Roles filled and reposted look like new openings. Weekly tracking will resolve this over 4–6 snapshots.
+- **n≥5 scope** — Two companies with classifiable roles were excluded for having fewer than 5 in-scope postings; their data is not surfaced in the company chart.
 
 ![Slide 6 — Limitations](05_outputs/deck/slide_06.png)
 
@@ -86,7 +95,7 @@ Full presentation: [`05_outputs/deck/hiring_signal_germany.pdf`](05_outputs/deck
 
 ## Data Note
 
-Company names appear on the charts as they do on public career pages — this data is already public. Raw ATS feed snapshots and the company list are not committed to this repository.
+Company names are anonymised in all committed outputs (Company A–L). Raw ATS feed snapshots, the company list, and named company data are not committed to this repository.
 
 ---
 
@@ -148,8 +157,7 @@ Open `05_outputs/charts.html` in any browser.
 | Pipeline | Python · SQLAlchemy |
 | Analysis | Python · pandas |
 | Charts | HTML · JavaScript (inline) · Playwright (PNG render) |
-| Benchmark | Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt, Dez 2024 |
 
 ---
 
-*Snapshot date: 2026-10-15 · n = 495 classified roles · 20 companies tracked*
+*Snapshot date: 2026-10-15 · n = 252 in-scope roles (n≥5 per company) · 19 companies tracked · 12 in chart*
