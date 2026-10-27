@@ -2,7 +2,7 @@
 
 **Which engineering, product, data and GTM roles in German tech are approaching the 90-day hard-to-fill threshold — and how much runway is left before they cross it?**
 
-A data analysis of live job postings across 19 German tech scale-ups. Built from public ATS feeds. Single snapshot: 2026-10-15.
+A data analysis of live job postings across German tech scale-ups. Built from public ATS feeds. Single snapshot: 2026-10-15. 12 companies met the minimum role threshold (n≥5) and appear in the analysis.
 
 ---
 
@@ -56,7 +56,7 @@ The chart uses anonymised labels (Company A–L) to keep the public output clean
 
 ## Role Family Signal
 
-Which role families are closest to the hard-to-fill line? Data and GTM show the highest hard-to-fill rates. All four families have active roles averaging within striking distance of the 90-day threshold.
+Which role families are closest to the hard-to-fill line? Product has the highest hard-to-fill rate (7.7%), followed by Data and then GTM (2.6%). Note: every count is below 5, so raw counts are reported rather than percentages. All four families have active roles with meaningful runway remaining before crossing the 90-day threshold.
 
 Note: the company benchmark (n=252) and role-family view (n=257) differ slightly — the family view includes all 14 companies with in-scope roles, while the company benchmark applies the n≥5 filter, dropping two companies. Both counts are intentional and correct for their respective views.
 
@@ -68,9 +68,9 @@ Note: the company benchmark (n=252) and role-family view (n=257) differ slightly
 
 This is a single-snapshot analysis. The core findings hold, but there are edges worth stating:
 
-- **Platform sample bias** — Sample leans towards companies on US-hosted ATS platforms. Personio and Greenhouse EU feeds block automated access.
+- **Platform sample bias** — Sample leans towards companies on US-hosted ATS platforms. Some EU-hosted feeds block automated access.
 - **Days open ≠ time-to-fill** — A role may have a strong internal pipeline while appearing open externally.
-- **One snapshot can't show closure** — Roles filled and reposted look like new openings. Weekly tracking will resolve this over 4–6 snapshots.
+- **One snapshot can't show closure** — Roles filled and reposted look like new openings. Repeated snapshots would resolve this over time.
 - **n≥5 scope** — Two companies with classifiable roles were excluded for having fewer than 5 in-scope postings; their data is not surfaced in the company chart.
 
 ![Slide 6 — Limitations](05_outputs/deck/slide_06.png)
@@ -160,4 +160,4 @@ Open `05_outputs/charts.html` in any browser.
 
 ---
 
-*Snapshot date: 2026-10-15 · n = 252 in-scope roles (n≥5 per company) · 19 companies tracked · 12 in chart*
+*Snapshot date: 2026-10-15 · n = 252 in-scope roles (n≥5 per company) · 12 companies in chart*

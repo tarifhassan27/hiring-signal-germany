@@ -7,17 +7,14 @@ reference point to know whether their hiring speed is normal or a real problem.
 # The Question
 
 Which role types and which companies in the German tech scale-up space take the longest
-to hire — and how do they compare against each other and against the published benchmark?
+to hire — and how do they compare against each other?
 
 # Scope
 
-- 20 German-HQ tech and SaaS companies, 300–2,000 employees
-- Data: public job posting feeds (Greenhouse, Ashby, Lever, Personio)
-- Snapshot date: [2026-10-15]
-- Benchmark: 168 days average closed vacancy duration, all occupations, Germany
-  (Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt Dezember 2024, p. 14;
-  IT-Berufe named as shortage occupations in the same report)
-  Source: https://www.arbeitsagentur.de/datei/arbeitsmarktbericht-dezember-2024_ba051354.pdf
+- German-HQ tech and SaaS companies, 300–2,000 employees
+- Data: public job posting feeds (Greenhouse, Ashby, Lever)
+- Snapshot date: 2026-10-15
+- Threshold: 90 days open, calibrated against this cohort (p90 = 51 days across 252 in-scope roles)
 
 # Why this is observable from outside
 

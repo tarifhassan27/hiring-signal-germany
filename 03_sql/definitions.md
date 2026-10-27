@@ -17,7 +17,7 @@ A role is flagged as hard-to-fill if it has been open for **90 days or more** fr
 posting creation date to the snapshot date.
 
 ## Snapshot date
-First snapshot: 2026-10-15. Weekly snapshots every Tuesday thereafter.
+First snapshot: 2026-10-15. Single-snapshot analysis.
 
 ## Company weighting
 No weighting applied. Each open role counts as one unit regardless of company size.
@@ -27,7 +27,7 @@ No weighting applied. Each open role counts as one unit regardless of company si
 - Roles with a creation date in the future are excluded
 - Duplicate postings (same title, same company, within 7 days of each other) — keep the oldest
 
-## Benchmark
-168 days average closed vacancy duration, all occupations, Germany.
-Source: Bundesagentur für Arbeit, Blickpunkt Arbeitsmarkt Dezember 2024, p. 14
-URL: https://www.arbeitsagentur.de/datei/arbeitsmarktbericht-dezember-2024_ba051354.pdf
+## Cohort threshold
+The 90-day hard-to-fill threshold is calibrated against this cohort: p90 posting age across
+all 252 in-scope roles is 51 days. A role at 90 days is already past the 90th percentile
+of the distribution — a meaningful outlier, not an arbitrary cutoff.
